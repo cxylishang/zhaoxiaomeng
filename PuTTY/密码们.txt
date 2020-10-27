@@ -1,0 +1,165 @@
+TS250 安装报错disabling lock debuging  due to kernel taint：
+解决：
+在安装启动页面弹出时，按tab键 --- 输入空格 --- 再输入 acpi=off --- 回车，进行安装
+
+链接：https://pan.baidu.com/s/1QVVN5fVK1ethpfPVVy03ZA 
+提取码：23hy 
+步骤:
+①插上U盘,打开刻录U盘文件夹,安装uiso9_cn.exe,打开文件-->选中Centos_6.7文件,选择启动-->写入硬盘映像-->写入
+②待100%完成后，关闭uiso9_cn软件,按照刻录完U盘的操作的方法,替换两个文件,拔掉U盘插在服务器上按照6.7安装文档安装
+
+给你提供下，如何有实时同步异常的影院，需要重做或重置位置的话，一个处理优先级的顺序，供你这边参考：
+保利、耀莱、百老汇、太平洋、华人（UME）、横店、上影、华谊
+
+Sqlyog连接的密码    账户：  yunwei
+                    密码：  P7nC#TwR
+                    密码：  UiBxKwCt						 						
+					1.32：	    yunwei			yhzyunwei
+					部分集团：  dbadmin			qEn84xSw
+					17/18：		bi_collect 		leying365collect
+					数据中心:	root			0i5faQoL
+								queryuser		123456
+								pyuser			yhzdatacenter
+
+登录服务器    	   账号： root
+       	                  yhzyunwei
+				   密码： YWe6VRlY      cine123456
+               集团密码： Y12jHt10Z
+		     登集团后台： 账号：admin      或者    账号:yhz		  或者		账号:yhz
+						  密码：dingxin            密码:leying				密码:ly@yhz@2010
+		 备份数据服务器： 172.16.1.32     root    yhzyunwei
+		 数据中心服务器： 10.10.1.19      root    qAXAbU8B9ecJzR0g
+												  Sz6kd985wewtEQxA
+												  Sz6kd985wewtEQxC
+
+万达服务器：登到10.10.199.88，密码是:	wandanoc
+万达普通单机：							Yhz135
+数据库密码： 万达：D9tleZqf		单机：	0i5faQoL	数据中心服务器：pyuser---yhzdatacenter
+
+远程控制卡	root	calvin
+
+kafka状态检查的页面:http://10.10.1.163:9000/	admin cine123456
+
+鼎新杰盈影院计算机售票系统    账号：   admin
+                              密码：   xf856tbh		对应密文：7474dc4074821bfe92090a087ab528c3
+							  密码：   admin        对应密文：21232f297a57a5a743894a0e4a801fc3
+							  密码:	   xjQr5%4X
+
+专资平台：        账号： 影城8位编码
+				  密码： 1234abcd
+
+BI直登链接：http://bi.piao51.cn/view/view/login.html
+BI测试链接：http://10.10.1.157:9999/view/view/login.html
+
+1.耀莱 4b9a2d50d9f7925538a8e8a4c12dd369
+2.横店 fb08b6468f2c7a4b31f9b922b3b9f62a
+3.保利 36d2789c74628ee6f0f4bb48fea19bd9
+
+上海VPN登服务器   10.10.0.128 :8022     root登录    密码： DQt5m21L
+北京VPN登服务器   10.10.0.120           root登录    密码： cine123456
+
+工单处理系统：    账号：  sixian001
+				  密码：  123456
+
+小米监控：http://10.10.0.5:1234/     账号：  lishang
+			                         密码：  123456
+
+更新SVN： 账号：lishang
+		  密码：123456
+
+zabbix：  账号：lishang     或者   Admin
+	      密码：cine123456         zabbix
+
+堡垒机：https://172.16.2.1/manager/identity.php		账号：zhaotianyu	密码：cine123456
+
+同步数据展示：http://10.10.1.19:8090/crawler/rtDataShow/index;jsessionid=C17830E09CC1B7A275944ED8E0DFAC21
+	账号：dx	密码：1qaznb2wsx
+
+hadoop---jenkins
+地址：http://10.10.1.164:9090/
+账号：lishang
+密码：lishang1248
+
+bi---jenkins
+地址：http://172.16.10.50:81/login?from=%2F           账号：lishang    密码：lishang1052
+前端APP发布链接：http://172.16.10.50:81/view/BI/job/Cinema_app_view_online_deploy/
+后端APP发布链接：http://172.16.10.50:81/view/BI/job/Cinema_app_api_online.fabu/
+前端BI发布脚本：		http://172.16.10.50:81/view/BI/job/BI_view_online_deploy/
+后端BI_report发布脚本： http://172.16.10.50:81/view/BI/job/BI_reportapi_online_deploy/
+后端BI_bass发布脚本：   http://172.16.10.50:81/view/BI/job/BI_bass_online_deploy/
+
+	jenkins发布前,要登到17服务器
+	cd /data0/app/redis/bin/
+	redis-cli
+	>keys is*             		#会返回"isToExport"
+	>get isToExport       		#会返回 true
+	>set isToExport "false"  	#将这个值改为false,再次查看改为true为止
+
+bass项目发布流程
+1)修改10.10.1.17的redis中"isToExport"的值为false
+    2）在/data0/app/tomcat7-bass/bin目录下关闭tomcat
+    3）将war包放置/data0/app/tomcat7-bass/webapps目录下
+    4）修改解压后的文件/data0/app/tomcat7-bass/webapps/bass/WEB-INF/classes/conf/config.propertites
+        17服务器上 syncKey=excelLineSyncExportBass_17，
+        18服务器上syncKey=excelLineSyncExportBass_18
+    5）修改10.10.1.17的redis中"isToExport"的值为true
+    6）在/data0/app/tomcat7-bass/bin目录下启动tomcat
+以上在17和18服务器上均需操作一次
+
+DGP---jenkins
+地址：http://10.10.1.55:8080/login?from=%2F           账号：lishang    密码：lishang
+
+172.16.7.8（数据考察导入服务器）  mysql密码： 0i5faQoL
+客服堡垒机	    172.16.7.1	root	      123456
+远程桌面连接	172.16.2.3	administrator Cine123456
+
+三楼监控:   https://172.16.4.10/webui/?g=main
+	账号:   admin
+	密码:   admin*RZX
+
+跳转 ssh -i isa 10.255.133.56
+服务器   10.10.0.5   cd /data1/cine/resource/upload/client/
+\\172.16.1.2\netdev
+\\172.16.1.11\public\客户端\2.客户端\鼎新杰盈线上专用
+
+---------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------
+
+服务器   10.10.0.5     root 登录      密码： DQt5m21L
+    cd  /data0/platform/
+	vim  hosts     //写入需要执行的影院ip
+	vim  sql       //复制要执行的代码
+	./dingxin_upgrade.py -f hosts -s sql   /执行这个脚本
+	
+	gossh -i host0917 -f -t push  /root/YuejieYsdService.class.php /data1/cine/code/run/application/modules/DingXin/services/Financial/Yuejie
+	gossh -i host0917 "ls /data0/rtagent/lib/netty-3.2.5.Final.jar"
+
+----------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------	
+
+批量升级：先在  10.10.0.5  的页面上设置好所有的项目，再登录  10.10.0.5  服务器
+	./dingxin_upgrade.py -t 2  -f hosts -l /root/upgrade -r /usr/local/bin/upgrade
+	./dingxin_upgrade.py -f hosts -c "chmod 755 /usr/local/bin/upgrade"
+	cd /data1/platform   将定时任务  check_upgrade  复制过去
+	./dingxin_upgrade.py -f hosts -l check_upgrade -r /etc/cron.d/check_upgrade
+
+----------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------
+
+/usr/local/cine/sbin/openvpn --daemon --config /usr/local/cine/etc/openvpn/client-jt.conf
+	/data1/cine/logs/jt-vpn-tcp.log                  //集团IP互通服务的日志
+	218.201.105.108 6080
+
+curl cip.cc                                              //  linux查看本地公网ip
+curl members.3322.org/dyndns/getip                       //  linux查看本地公网ip
+
+数据库找到cinema_set表，找到status影院状态改成正常(2)    //  1 为测试, 2 为营业状态
+lsof -p 进程号 | more                                    //  看该进程的详细情况          
+
+cat /etc/rc.local
+vim /usr/local/cine/apache/conf/httpd.conf
+报表打不开  ---   远程桌面内连接   172.16.2.3
+
+17--nginx启动方式：
+  /data0/app/nginx/sbin/nginx -s reload
+
