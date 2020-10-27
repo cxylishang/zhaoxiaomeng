@@ -1,0 +1,17 @@
+
+1、阿里云后台
+            账号：mofanchuxing01
+            密码：MFali@2019!
+
+			阿里后台rds实例可在172.18.1.0/24段连接：
+			mysql -h rm-2ze50w54llzt30t16.mysql.rds.aliyuncs.com -uroot -pMFdb@2019!
+2、mysql
+账号：root
+密码：
+MFdb@2019!
+	/lib/systemd/system/mysqld.service
+
+
+3、远程连接密码： 911549
+	0i5faQoL
+	YWe6VRlY

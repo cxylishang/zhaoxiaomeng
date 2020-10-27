@@ -1,0 +1,18 @@
+mysql表迁移
+
+1、相关表
+	服务器
+i-2zef968enjl8q7mniapg
+
+	bq_bjev_gxqc 库
+	
+	red_envelope_log
+	sys_coupon_gift
+	sys_coupon_gift_rel
+	sys_coupon_list
+	sys_coupon_sendrules
+	sys_coupon_type
+	
+	
+2、rds实例
+rm-2ze50w54llzt30t16

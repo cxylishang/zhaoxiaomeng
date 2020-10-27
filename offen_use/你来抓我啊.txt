@@ -1,0 +1,1321 @@
+
+# 网络基础：
+
+电脑参数：
+cpu：品牌：inter 、ADM.型号：酷睿core i3 i5 i7，奔腾pentium DE、G.
+内存：类型：DDR3、DDR3L（低压）、DDR4.
+硬盘：500G、1TB.转速：5400~7200转/分.接口：SATA（电脑）、SAS（服务器）.
+BISO：系统启动时，BISO程序对计算机硬件检查，是一个只读芯片，写入的内容保存在cmos中，由一个纽扣电池供电.
+	
+服务器参数：
+cpu型号：inter至强xeon e3、e5、e7.（E5-2603）
+品牌：dell R6300、联想x365等，服务器性能评价指标“RASMU”.
+cpu：XEon（至强）E5-2603.
+硬盘：scsi接口，现在SAS接口，10k~15k转/分
+内存：Ecc校验技术、
+
+
+虚拟机软件：VMware Workstation、VMware vSphere(ESXI)、KVM、docker(多)
+虚拟机运行模式：寄居架构和原生架构
+
+#### OSI七层模型：
+
+	①应用层：网络服务与用户的一个接口，实现用户的各种应用或功能.
+	②表示层：数据的表示、安全、压缩.
+	③会话层：建立、管理、终止会话.
+	④传输层：实现可靠或不可靠的传输.
+	⑤网络层：添加ip地址，实现不同网络的路径选择.
+	⑥数据链路层：添加物理地址，实现链路通信.
+	⑦物理层：建立、维护、断开物理连接.
+	
+还有两种说法：
+    
+TCP/IP五层：应用层、传输层、网络层、数据链路层、物理层.
+TCP/IP四层：应用层、传输层、网络层、网络接口层.
+ 
+#### 各层的协议：
+##### 应用层：
+
+FTP(文件传输协议) 20 21/TCP，SSH 22/TCP，TELNET 23/TCP，SMTP(简单邮件传输协议) 25/TCP，
+DNS(域名解析) 53/TCP UDP，DHCP 67 68/UDP，TFTP(简单文件传输协议) 69/UDP，
+HTTP(超文本传输协议) 80/TCP，HTTPS443/TCP，POP3 110/TCP，IMAP 143/TCP，NTP(网络时间协议) 123/UDP，
+SNMP(简单网络管理协议) 161/UDP，RPC(远程过程控制协议)111/UDP，MYSQL 3306/TCP，ORACLE(数据库) 1521/TCP，
+squid 3128，fpm 9000，zabbix 10051，zmoeba 8066改为3306.
+ 
+##### 传输层：
+
+TCP(面向连接的可靠的传输层协议)大数据、大报文;UDP(无连接的不可靠的传输层协议)小报文
+ 
+##### 网络层：
+
+ICMP(诊断网络故障ping、traceroute)、IP、ARP(已知ip获取mack地址)
+
+###### 双绞线颜色顺序(超5类线)：
+
+T568A：白绿、绿、白橙、蓝、白蓝、橙、白棕、棕
+T568B：白橙、橙、白绿、蓝、白蓝、绿、白棕、棕
+接口规范相同的用交叉线（除交换机），不同的用直通线（交换机）
+WAN：    广域网，一般由电信部门管理
+LAN：    局域网，企业内部
+网络拓扑：(分层，接入层，汇聚层，核心层)
+星型：    中心节点压力大，易于实现，易于网络排查
+网型：    可靠性高，成本也高
+
+***
+    交换机原理：交换机根据数据帧的原MACT地址生成MACT地址表，根据数据帧的目标MACT地址表进行发，目标MACT未知
+    广播，目标MACT已知单播.端口号是应用层程序的地址，被封装在传输层报文的头部.
+***
+
+ IP地址分类：A类：1-126，B类：128-191，C类：192~223
+ 私有地址三类：10.0.0.0-10.255.255.255，172.16.0.0-172.31.0.0，192.168.0.0~192.168.255.255
+
+##### LINUX操作系统  遵循GPL协议，可运行在pc上
+
+Redhat：RHEL（企业版），收费、提供服务的.
+CentOS是Red Hat重编译版，是免费的，Debian系列，Ubuntu系列，SUSE系列
+UNIX操作系统：IBM-AIX、HP-UX、SUN-Solaris(也有pc版本)、FreeBSD(学术派)
+/dev/sda1，逻辑分区第一个为sda5
+
+***
+    分区方式fdisk和parted，fdisk单个分区小于2T
+	
+###### 硬盘接口： 
+
+SAT、SASI、SAS接口规范都称为sd
+
+#### 文件系统：
+
+ext4，xfs管理普通分区;swap交换分区（windows中的虚拟内存）
+
+目录：/root(管理员宿主目录)  /bin(普通用户可以使用的命令目录)  /boot(内核以及启动文件)  /dev(设备文目录) 
+	 /etc(配置文件目录)     /home(普通用户默认的宿主目录)    /var(可变的文件目录，如日志、邮件等)  
+	 /lib(库文件)          /usr(用户安装软件的目录)        /media(挂载移动设备的文件)
+	
+##### 简单常用命令:
+
+退出当前操作系统:		exit
+查看内核版本:			uname -r (2.10)，  linux7.0以上是3.6
+查看系统发行版本:		lsb_release -a，  linux7.0以上版本：
+查看系统版本:			cat /etc/centos-release	或	cat /etc/redhat-release
+查看cpu型号信息:		cat /proc/cpuinfo
+查看cpu(系统)负载信息	uptime，top
+查看cpu的使用情况:	mpstat
+查看内存:			cat /proc/meminfo，free -m
+查看主机名:			hostname
+查看ip地址:			ifconfig eth0
+查看卡类信息:			lspci
+查看磁盘使用情况:		df -hT，查看磁盘文件数使用信息：df -i，节点使用
+查看进程：		   	 ps ax或ps -ef 关机:		shutdown -h now或power off或init 0,  shutdown -h +10,十分钟后关机  重启:		shutdown -r now或reboot或init 6.
+查看文件的具体储存信息和时间等信息:	 stat 文件名
+
+#### shell命令:
+
+某些命令忘记使用格式：例如 ls --help，man file 获得帮助
+ls -a			(显示所有文件)
+ls -ld			(显示文件属性)
+ls -lh			(以更易读的方式显示)
+ls -r			(递归查看)
+du -sh 			(统计文件大小)  (-sh更易读的方式显示)
+cp -r			(复制，连同目录)
+cp -p			(复制，连同文件属性)
+rm -rf			(递归删除)
+userdel -r u1	 删除u1时连同目录一块删除
+rename  .txt  .log  *.txt                       //不使用 mv ,把 a.txt 改名为 a.log
+
+******
+###### 数据迁移：数据占用空间太多，将数据迁移到新的磁盘
+	①对新磁盘分区、创建文件系统，并挂载到新挂载点，如/dir1
+	②将旧目录中的数据复制到新的挂载点目录，如cp -p /home /dir1
+	③将旧目录中的数据删除，如rm -rf /home
+	④将磁盘从新挂载点解除 ，并挂载到旧目录
+ 
+ which 查看PATH变量中特定位置下的命令文件,查找命令，PATH用于指定命令搜索路径.
+ 
+ ###### find以各种形式查找文件，看test.conf文件
+
+find /etc -name test.conf -type f | mor
+find -atime (根据访问时间查找) +3(三天前)
+find -ctime (根据创建时间查找) -3(三天之内创建的)
+find -mtime	(根据更改时间查找) +n -n
+
+
+查看文件内容：cat,more,less,head,tail,nl
+检索文件内容：wc -l,grep -v(翻转查找) ^$,除去空格显示其他
+
+###### 处理文件或文件夹:
+
+打包：tar  zcf  aaaa.tar.gz  aaaa
+解包：tar  zxf  aaaa.tar.gz
+rm -rf `find / -name httpd` 就OK了
+
+
+查看软件版本:		rpm -qi
+卸载软件:		rpm -e
+查看软件是否在:	rpm -qa
+查看软件安在哪里:	rpm -ql
+安装rpm包的软件:	rpm -ivh xxx.rpm  (--force  强制安装)
+更新一个软件:		rpm -Uvh xxx.rpm
+--nodeps 如果该RPM包的安装依赖其它包，即使其它包没装，也强迫安装
+
+###### 把任务放到后台：
+
+nohup命令:nohup command &
+  如果使用了nohup命令，在缺省情况下，该作业的所有输出都被重定向到一个名为nohup.out的文件中，除非另外指定了输出文件：
+nohup command>myout.file 2>&1 &
+  这样command的所有输出就被定向到了myout.file
+&：加在一个命令的最后，可以把这个命令放到后台执行,如gftp &,
+ctrl + z：可将一个正在前台执行的命令放到后台，并且处于暂停状态
+jobs：前有多少在后台运行的命令
+fg：将后台中的命令调至前台继续运行 
+bg：将一个在后台暂停的命令，变成继续执行 （在后台执行）
+将任务转移到后台运行：先ctrl + z；再bg %jobnumber，这样进程就被移到后台运行，终端还能继续接受命令。
+
+#### 账号与权限管理：
+
+添加用户：useradd, 删除 userdel,修改usermod.  passwd 修改口令
+添加组： groupadd, 删除 groupdel, 作为用户基本组的组无法删除
+gpasswd -a 用户名 组名，已有的用户放到组中
+useradd u1 -g group1: u1加到grou1中,作为基本组,-G,作为附加组
+id u1:	查看用户u1属于哪组
+users: 	查看当前登陆的用户哪些、（who，w）都可以
+groups u1：查看用户u1属于哪个组
+last： 查看最近登陆的用户
+lastb：查看最近登陆失败的用户
+/etc/passwd: 保存用户名称、宿主目录、登陆shell等基本信息
+/etc/shadow: 保存用户密码、账号有效期等信息
+/etc/group:存放组相关的文件
+添加账户(使用之前用户的密码)：
+useradd -p '$6$lq/7KOsV$packR6fzEcDo2.cOpRSKtKgsZZaSF5.DCwCiq5T46pU1P.LSo.UhomjEgCjRRpmeVYi5LMWhTW7xx7ESWyEsF/' hezhifang
+
+
+passwd命令，任何用户使用时都可以临时切换到root来使用此命令
+passwd -d：清空密码
+passwd -l：锁定用户;passwd -u：解锁用户
+passwd -S：查看用户状态(是否被锁定)
+
+
+~/.bash_profile:	指定用户登录时执行的文件.
+/etc/profile:		全局的对任何用户登录时执行的文件 
+/etc/rc.local:		用于定义用户自定义的随机启动时执行的命令
+/etc/fstab:			用于记录开机后自动挂载的文件系统记录(固化挂载)
+
+##### 用户权限管理:
+
+基本权限(rwx)设置，针对于属主，属组，chmod，chown
+附加权限，粘滞位，o+-t(任何用户可以写入，不可以改别人的);
+suid u+-s(用户执行次命令时，临时切换成这个命令的权限);
+sgid g+-s
+ls -alR / | grep ^-..s  查找所有执行权限为s的命令
+权限(文件ACL)，设置扩展权限setfacl，查看扩展权限getfacl，不针对于属主属组，对任意用户设置
+
+
+设置权限：
+chmod -R 1777 (1代表粘滞位附加权限，777代表全部)
+chmod  u、g、o、a +- (rwx) 文件名, u(主) g(组) o(其他) a(所有用户)
+也可=(rwx)忽略原权限，直接改成现在的.
+  
+设置文件目录和归属chown -R 主：组 文件名
+chattr +i /etc/resolv.conf                  //使得该文件成为只读
+chattr -i /etc/resolv.conf                  //解除只读权限
+
+#### 磁盘和文件管理系统(两个工具)
+
+fdisk(管理<2T的文件)，分区表在MBR中，最大支持4个主分区;
+parted(管理>2T的文件)，分区表在GPT中，最大支持128个主分区;
+创建文件系统(格式化)mkfs -t ext4，mkfs -t xfs(速度快些)
+逻辑磁盘管理，lvm逻辑卷管理，可以动态调整容量，没有冗余性(可靠性)
+Raid管理，有冗余性，可以提升性能.
+挂载光盘镜像：mount -o loop ISO镜像文件 挂载点目录(/dir1)，解除umount
+LVM机制：PV(物理卷，,VG(卷组)，LV(逻辑卷)
+磁盘配额：限制用户在文件系统上空间或文件数的大小限制
+
+#### 进程和计划任务
+
+查看进程：ps -ef, netstat -antp, netstat -lntp(去重查询)
+查看所有：ps ax，(a:查看所有进程，u:列出执行用户，f:列出父子关系) 或 ps -ef
+显示动态排名：top(包括系统负载，cpu空闲率，IO数据输入输出等待)
+pgrep -l 进程名
+ps tree (显示进程树)
+结束进程：ctrl C，kill 进程号，killall 进程名字，pkill 进程名字.都可以加-9，强制结束
+
+###### 计划任务：
+
+一次性的at  周期性地crontab，编辑计划任务 -e，查看-l，删除-r
+0 17 * * 1-5		 周一到周五每天17:00 
+30 8 * * 1,3,5	     每周一、三、五的8点30分
+0 8-18/2 * * *		 8点到18点之间每2小时
+0 5 */3 * *		 	 每3天的5点
+
+##### 日志：
+
+计划任务中打包备份时加日期，tar zcvf etc.`date +%Y%m%d-%H%M%S`.tar.gz  /etc
+系统故障分析排查：(查找日志)日志：记录系统、程序中发生的事件
+内核和系统日志，由一个服务rsyslog服务统一管理，配置文件/etc/rsyslog.conf
+主日志文件：/var/log/messages. 
+apachede配置文件：httpd.conf      访问日志文件：access.log和error_log
+
+###### 日志切割：
+
+方法一，mv移走日志，重载服务
+方法二，不允许重载服务，写脚本，内容：复制日志并统计日志行数;用sed -i -c对原文件删除相应行数
+脚本如下
+date=`/bin/date +%Y%m%d`
+a=`/bin/cat /tmp/access_log | wc -l`
+/bin/cp -p /var/log/httpd/access_log /tmp.${date}
+/bin/sed -i -c “1,${a}d” /var/log/httpd/access_log   做成计划任务
+
+
+最近登陆用户事件：/var/log/lastlog 
+用户登录注销及系统开关机事件：/var/log/wtmp
+当前登录的每个用户的详细信息：/var/run/utmp
+与用户验证相关的安全性事件：/var/log/secure
+日志消息级别：七个级别.
+0、EMERG(紧急) 1、ALERT(警告) 2、CRIT(严重)3、ERR(错误)4、WARNING(提醒)
+5、NOTICE(注意)6、INFO(信息)7、DEBUG(调试)
+系统启动：①开机自检(BISO)→硬盘，引导记录②MBR主引导记录(③分区表，结束)→④内核→⑤init→⑥各种服务
+Init有七个运行级别0-6;
+0：关机状态，1：单用户模式，2：不支持网络的多用户字符模式，3：完全多用户字符模式，4：保留未用的，5：图形模式.
+
+##### 网络基础设置：
+
+查看ip：	ifconfig eth0
+		ip a
+查看网关：route -n
+查看DNS：cat  /etc/resolv.conf
+测试网络通信：
+	ping -c 5 目标主机ip,   traceroute 目标主机ip  (追踪错误点)
+	nslookup 解析DNS是否可以，或者host
+查看网络连接状态：
+		netstat (-antp.......) | grep EST | wc -l，统计运行的进程数
+查看正在监听的进程：netstat -nltu
+设置ip：ifconfig eth0 192.168.1.10/24
+设网关：
+	route add default gw 下一跳，route  add  -net  1.0/24  gw 下一跳，
+	route add -host  ip,  删除时route del +... 除了gw之后的.
+
+###### FTP服务
+
+控制连接21/tcp发送FTP命令和数据连接20/tcp,上传下载数据
+数据连接分为主动和被动:
+	主动：服务端的20号端口主动向客户端发起连接。
+	被动：服务端指定范围内某个端口等待客户端发起请求.
+常见的FTP服务器程序：vsftpd，工作中常用：SSH、SCP、SFTP、rsycn.
+
+###### DNS服务：
+
+正向解析(根据主机名查找IP地址)和反向解析.
+服务器给客户端提供解析的时候，一种是递归，一种是迭代.
+递归：当无解析记录时，服务器与其他服务器进行交互，将最终结果响应给客户端，一般在企业内网中使用.
+迭代：本服务器不能完成解析时会返回下一个服务器ip，由客户端再向其他服务器发出查询，公网中服务器一般使用迭代
+dns 53/udp、tcp，tcp主要用于主从复制，udp用于小的数据包查询
+
+###### LAMP环境：
+
+httpd：2.2.32版本，mysql：5.6版本，php：5.6版本.
+Httpd：使用prefork模块，几个设置
+错误代码：
+	    403(禁止)服务器拒绝请求, 404-请求的网页不存在, 503-服务器超时, 
+	    502(错误网关)服务器作为网关或代理，从上游服务器收到无效响应。
+httpd配置文件：httpd.conf，mysql配置文件：my.cnf，php配置文件：php.ini
+安装apache时，解包、配置、编译、安装、优化执行路径、添加系统服务
+参数：--prefix:指定安装路径、--enable-so:支持动态模块、--enable-rewrite:支持url重写功能、
+--enable-charset-lite:支持各种字符集、--enable-cgi:支持脚本功能
+	Httpd的全局配置参数，Timeout网络连接超时设为60s;http是否开启了保持连接，每次连接最多请求
+	连接文件数为100，保持连接状态时的超时时间5s.
+Mysql：还有oracle数据库，IBM-DB2，微软-sqlserver，mariaDB数据库
+
+##### mysql:
+
+安装mysql后，设置数据库用户密码，mysqladmin -u root -p password 123456  
+查看所有数据库:	    show databases;
+查看数据库中所有表:	use 表名; show tables;
+显示数据库表结构:   	describe 数据库名.表名;
+查看数据库表结构:		show create table 表名;
+***
+创建新的数据库:   	create database 数据库名;
+创建新的数据表(创建标头):
+create table users(user_name char(16) not null,user_passwd char(48) default’123456’,primary key (user_name));
+***
+删除数据库:          drop table 数据库名.表名;
+删除数据库:          drop database 数据库名;
+***
+向表中插入新的记录:   insert into 表名(字段1,字段2,..) values (字段1的值,....);
+例如：insert into 表名(user_name,user_password) values(‘lisi’,’123456’);
+从表中查找记录：
+	查看全部记录：  select  *  from 表名;
+	查看符合条件的：select user_name,user_password from 表名 where 条件;
+	例如：select user_name,user_password from 表名 where user_name=’lisi’;
+***
+修改表中的记录(将lisi的密码改为123):
+update 库名.表名 set user_password=password(‘123’) where user_name=’lisi’;
+将root的密码改为655521：
+update mysql.user set password=password(‘655521’) where user=’root’;
+flush privileges; 更新数据库
+删除表中指定的记录：删除zhangsan
+delete from 库名.表名 where user_name=’zhangsan’;
+***
+设置用户权限(用户不存在时，新建用户)：
+grant select(all) on 库名.*  to  ‘用户名’@’来源地址’ identified by ‘密码’;
+查看用户权限：show grants for ‘用户名’@’来源地址’;
+撤销用户权限：revoke all on 库名.* from ‘用户名’@’表名’;
+***
+备份数据库与恢复：xtrabackup备份工具，数据库超过50G，备份效率高;
+①、直接备份目录：tar zcfp /usr/local/mysql/data 包名 /usr/local/mysql/data/
+	使用时解包到相应位置;
+②、使用备份工具mysqldump
+***
+mysqldump -u 用户名 -p 库名 表名 > /opt/备份的名
+mysqldump -u root -p auth users > /opt/mysql-user.sql          		备份表
+mysqldump -u root -p --databases db1 db2 > /opt/mysql-auth.sql      备份库
+mysqldump -u root -p --all-databases > /opt/all-data.sql            备份所有
+恢复操作：  mysql -uroot -p 库名 < /路径/文件名
+授权远程登录：grant all privileges on *.* to root@'172.16.6.249' identified by '123';
+	FLUSH PRIVILEGES;												刷新权限表
+客户端登录时：mysql -uroot -p123 -hmysql客户端ip
+my.cnf中加入	skip-grant-tables								重启数据库,不用再输-h127.0.0.1
+
+
+php修改几个配置：
+	default_charset = "utf-8”   设定字符集为utf8
+	file_uploads = On           允许上传文件
+	upload_max_filesize = 2M    允许上传文件的大小
+	max_file_uploads = 20       允许上传文件数量
+
+#### Shell脚本:
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20190904102455742.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2ExNzg1MzQ4MTU3Ng==,size_16,color_FFFFFF,t_70)
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20190904102610301.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2ExNzg1MzQ4MTU3Ng==,size_16,color_FFFFFF,t_70)
+
+编写脚本时流程控制分三种，顺序结构、分支结构、循环结构.
+正则表达式，grep、sed、awk的使用.
+脚本执行时：
+	①加上执行权限  执行 . /脚本路径  .代表当前路径.
+	②bash /脚本文件路径
+	③． /脚本路径，.代表当前shell，②和③可不加执行权限.
+脚本第一行：#！/bin/bash(由/bin/bash来解释下面的语句)
+变量的作用：为了增加系统管理和脚本执行的灵活性
+预定义变量：$0:脚本名，$1~$9：通过执行脚本时未知参数的位置给变量赋值，称为位置变量
+.$#:参数个数,$*:参数列表,$?:上条命令结束返回值.
+
+
+Linux中变量#,@,0,1,2,*,$$,$?的含义:
+{
+ $# 是传给脚本的参数个数
+ $0 是脚本本身的名字
+ $1 是传递给该shell脚本的第一个参数
+ $2 是传递给该shell脚本的第二个参数
+ $@ 是传给脚本的所有参数的列表
+ $* 是以一个单字符串显示所有向脚本传递的参数，与位置变量不同，参数可超过9个
+ $$ 是脚本运行的当前进程ID号
+ $? 是显示最后命令的退出状态，0表示没有错误，其他表示有错误
+}
+	 
+
+定义变量时不以数字开头，常用_开头
+赋值时使用符号：
+双引号“”：通过$引用其他变量
+单引号’’：禁止引用其他变量
+反撇号``：命令替换，提取命令执行后的输出结果
+$()：    命令嵌套时替换反撇号
+${}：    引用变量，用于区分变量名和紧跟其后的字符
+
+
+运算：expr 变量1 运算符 变量2， +  -  \*(乘)  /  %(取余)
+条件测试操作：
+文件测试：[ 操作符 ],-e:是否存在,d:是否为目录,-f:是否为文件,-r(读),-w(写),-x(执行)
+整数值比较：-eq、-ne、-gt(大于)、-ge(大于等于)、-lt(小于)、-le(小于等于)
+逻辑比较：[ 字符串 操作符 字符串 ]  字符串：=,  !=
+for循环和while循环比较:
+for循环可以根据一个值列表控制循环次数.
+while通过控制变量控制循环次数，也可以通过交互式赋值控制循环.
+wc -l 只显示行数
+wc -w 只显示单词数
+wc -c 只显示字节数
+
+#### 正则表达式:
+
+1、.代表任意单个字符, 如：/l..e/与包含一个l，后跟两个字符，然后跟一个e的行相匹配
+2、^代表行的开始. ^love 如：与所有love开头的行匹配
+3、$代表行的结束.love$ 如：与所有love结尾的行匹配
+4、[…]匹配括号中的字符之一
+   [0-9a-zA-Z]匹配任意英文字母或数字之一
+5、*表示前导字符出现0次或任意多次,'a*d'匹配所有0个或多个a后紧跟d的行
+6、\?用于修饰前导字符，表示前导字符出现0或1次, a\? 匹配0或1个a
+7、\+ 用于修饰前导字符，表示前导字符出现1或多次, a\+ 匹配1或多个a
+8、\{n,m\}  #用于修饰前导字符,表示前导字符出现n至m次(n和m都是整数,且n<m)a\{3,5\} 匹配3至5个连续的a,\跟在}前面转义,
+   \{n\}  连续的n个前导字符,  \{n,\}  连续的至少n个前导字符
+9、\  用于转义紧跟其后的单个特殊字符，使该特殊字符成为普通字符
+	如：^\.[0-9][0-9] 对以一个句点和两个数字开始
+10、｜表示或 , 如：a|b|c 匹配a或b或c
+***	
+grep命令用法(对行过滤):
+grep -A 1 panda file (从file中搜寻有panda样式的行，并显示该行的后1行)
+grep -B 1 panda file (从file中搜寻有panda样式的行，并显示该行的前1行)
+grep -C 2 panda file (从file中搜寻有panda样式的行，并显示该行的前后各2行)
+grep -c, 不显示符合样式的行，只显示符合的总行数
+grep -i,  --ignore-case   		忽略大小写差别
+grep -n,  --line-number   		在匹配的行前面打印行号
+grep -v,  --revert-match  		反检索，只显示不匹配的行
+grep -E "douyu|panda|tiger",	检索包含douyu、panda、tiger的行
+
+
+#### sed基本命令： -i(改变原文件)
+-s替换：
+sed 's/day/night/' file,将文件中的每一行第一次出现的 day替换成night,
+sed 's/day/night/g' file,将文件中的每一行出现的所有的day替换成night, 
+sed '1,3s/day/night/' file,将文件中的第一三行第一次出现的 day替换成night
+-d 删除：sed ‘/how/d’ file,将文件中包含how的所有行删除,
+-a 增加行(在指定行后)：sed ‘2a hello’ file,在第二行后增加一行hello,多行用\隔开
+-i 增加行(在指定行前)：sed ‘2i hello’ file,在第二行前增加一行hello,多行用\隔开
+-c 取代：sed ‘2,5c welcome’ file,用welcome来取代文件中第2到5行,
+-p 打印(输出)：sew
+sed '/north/p' datafile 默认输出所有行，找到north的行重复打印
+sed -n '/north/p' datafile 禁止默认输出，只打印找到north的行
+sed -n '5,7p' /etc/passwd仅列出/etc/passwd文件中的第5～7行内容
+sed -n '1p;3p;5p;7p;10p;15p' /etc/passwd显示/etc/passwd的1,3,5,7,10,15行
+#取出"***"字符串里 error: 与 : 之间的子字符串,并消除空格
+echo "src/network/misc/nv_net_udp.c:17: fatal error: nv_net_tools.h: No such file or directory" | sed -r 's/.*error\:(.*)\:.*/\1/' | sed s/[[:space:]]//g
+
+#### awk命令：
+
+cut -d: -f2 == awk -F: '{print $2}'
+awk -F : '{print $1,$7}' /etc/password,显示/etc/passwd文件中的用户名和登录shell
+  ...'{print $1 "," $7}' /etc/pqssaord, 显示用户名和shell，之间用逗号隔开
+awk ‘NR==1,NR==3,NR==5’
+echo "123abc" | awk '{print substr($0,4,1)}'		截取123abc字符串中,第四个字符开始长度为1的部分
+###先执行BEGING,然后读取文件,读入有/n换行符分割的一条记录,然后将记录按指定的域分隔符划分域,填充域,最后执行END操作
+cat /etc/passwd |awk  -F ':'  'BEGIN {print "name,shell"}  {print $1","$7} END {print "blue,/bin/nosh"}'
+awk -F: '/root/' /etc/passwd						搜索/etc/passwd有root关键字的所有行
+awk -F: '/root/{print $7}' /etc/passwd				搜索/etc/passwd有root关键字的所有行，并显示对应的shell
+###统计/etc/passwd:文件名，每行的行号，每行的列数，对应的完整行内容
+awk -F: '{print "filename:" FILENAME,"linenum:" NR,"columns:" NF,"main:" $0}' /etc/passwd
+awk -F: '{printf("filename:%s,linenumber:%s,columns:%s,linecontent:%s\n",FILENAME,NR,NF,$0)}' /etc/passwd  与上一行一样
+###下面统计/etc/passwd的账户人数
+awk '{count++;print $0;} END{print "user count is ", count}' /etc/passwd
+awk 'BEGIN {count=0;print "[start]user count is:",count} {count++;print $0} END{print "[end]user count is:",count}' /etc/passwd
+###统计某个文件夹下的文件占用的字节数
+ls -l | awk 'BEGIN {size=0;} {size=size+$5;} END{print "[end]size is:",size/1024/1024,"M"}'
+###统计某个文件夹下的文件占用的字节数(过滤掉文件夹-大小为4096)
+ls -l | awk 'BEGIN {size=0;print "[start]size is:",size} {if($5!=4096){size=size+$5;}} END {print "[end]size is:",size/1024/1024,"M"}'
+###显示/etc/passwd文件中的账户
+awk -F: 'BEGIN {count=0;} {name[count] = $1;count++;} END{for (i=0;i<count;i++) print i,name[i]}' /etc/passwd
+	
+awk的内建函数：
+(substr截取、split初始化和类型强制、length字符串长度、gsub函数)
+①substr用法:echo "123abc" | awk '{print substr($0,4,1)}'	 截取123abc字符串中,第二个字符开始长度为1的部分:  a
+②split用法：echo "12:34:56" | awk '{split($0,a,":");print a[1],a[2],a[3]}'		得到：12 34 56
+	或
+echo "12:34:56" | awk -F: '{split($0,a);print a[1],a[2],a[3]}'					得到：12 34 56
+③length用法：echo "19960226" | awk '{print length}'   							得到：8
+	
+###### 基本脚本：(在常用脚本中)
+
+1、监控服务状态（mysql、httpd、nginx、tomcat...）
+2、检查主机存活性（服务器IP有列表文件，用for循环实现）
+	ping -c 3 -i 0.2 -W 1 IP地址
+3、服务启动控制脚本（nginx、PHP-fpm）
+4、批量添加用户（用户有列表文件，用for循环实现）
+	useradd 用户名
+	echo "用户名" | chpasswd
+	chage -d 0 用户名
+5、检查主机性能（cpu使用率、cpu负载、内存使用率、磁盘使用率、登录用户数、进程数...）
+	超过阈值邮件告警
+	对多台主机监控如何实现？
+	（提示：ssh root@主机IP uptime，对目标主机先实现免交互登录）
+6、定期备份数据库(计划任务)
+	date=`date +%Y%m%d`
+	tar zcf mysql-$date.tar.gz  /usr/local/mysql/data/
+7、定期备份日志
+	date=`date +%Y%m%d`
+	tar zcf nginx-$date.tar.gz  /usr/local/nginx/logs/access.log
+8、rsync+inotify远程实时同步脚本
+
+
+远程ssh登录验证慢的问题，修改/etc/ssh/sshd_config配置文件
+GSSAPIAuthentication no
+UseDNS no
+改完两行，重启ssh服务,/etc/init.d/ssh restart
+
+##### 系统加固：
+
+①、使用SUDO给某些用户授权，避免所有管理员都以root用户登录;
+②、清理系统用户(如删除、禁用、更改程序用户的登录shell为/sbin/nologin);
+③、关闭不必要端口(如web服务器只开放80和 远程登录的端口22);
+④、开机及安全登录配置BISO：设置密码和设置以硬盘启动;GRUB：设置密码，关闭单用户登录，禁用CTRL-ALT-DEL热键;
+⑤、修改SSH端口，关闭ROOT用户登录;改成3333了
+⑥、配置防火墙策略;
+⑦、服务升级，apachectl升级到2.2.31以上，SSH升级到6.6，7.3等;绿盟漏扫
+⑧、修改文件及目录权限(很细化，参照文档);
+关闭不必要的端口：netstat -antup;killall 进程名;
+系统账号用户清理：
+将非登录用户的Shell设为/sbin/nologin：usermod -s /sbin/nologin
+锁定长期不使用的账号：passwd  -l  用户名
+删除无用的账号：userdel  -r 用户名
+锁定账号文件  passwd、shadow: chattr +i /etc/passwd /etc/shadow
+查看文件状态：lsattr /etc/passwd /etc/shadow
+解锁账号文件：chattr -i /etc/passwd /etc/shadow
+密码安全控制：
+设置密码有效期：vim /etc/login.defs 
+(30天有效期)     PASS_MAX_DAYS  30       (适用于新建用户)
+			   chage -M 30 lisi        (适用于已有用户)
+强制在下次登录时更改密码：chage -d 0 zhangsan 
+闲置600秒后自动注销：  vim  ~/.bash_profile
+						export TMOUT=600
+减少记录的命令条数：   vim /etc/profile
+(限制200条保留)         HISTSIZE=200
+注销时自动清空命令历史：vim  ~/.bash_logout
+						history -c
+						clear
+
+
+限制使用su命令的用户：
+①、启用pam_wheel认证模块：
+	vim  /etc/pam.d/su 
+	#%PAM-1.0
+	auth        sufficient  pam_rootok.so
+	auth        required   pam_wheel.so use_uid
+②、将允许使用su命令的用户加入wheel组
+	gpasswd -a zhangsan wheel：将zhangsan加到wheel组中，使用su命令.
+使用su命令时：带 - 选项表示将使用目标用户的登录Shell环境
+	sudo：以其他用户的身份执行授权的命令，避免都登陆root操作.
+	visudo或vim /etc/sudoers       (用户   主机名列表=命令程序列表)
+		  %wheel	         ALL=NOPASSWD: ALL
+		  jerry	             localhost=/sbin/ifconfig
+查看sudo操作记录：
+需先启用 Defaults logfile 配置：visudo
+Defaults logfile = "/var/log/sudo"
+再查看：tail /var/log/sudo    (默认日志文件：/var/log/sudo)
+查询授权的sudo操作：sudo -l
+调整BIOS引导设置:
+将第一引导设备设为当前系统所在硬盘
+禁止从其他设备（光盘、U盘、网络）引导系统
+将安全级别设为setup，并设置管理员密码
+禁用重启热键Ctrl+Alt+Del：
+	vim /etc/init/control-alt-delete.conf
+	#start on control-alt-delete
+	#exec /sbin/shutdown -r now “Control-Alt-Delete pressed”,然后重启生效.
+GRUB限制的实现：
+使用grub-md5-crypt获得加密字串
+grub-md5-crypt
+Password:
+Retype password:
+$1$Kndw50$wRW2w1v/jbZ8n5q2fON4y/
+改配置vim /boot/grub/grub.conf
+Password --md5 $1$Kndw50$wRW2w1v/jbZ8n5q2fON4y/
+title Red Hat Enterprise Linux  (2.6.32-431.el6.x86_64)
+将密码加在第一个title之前(全局部分)，未经授权禁止修改启动参数
+将密码放在每一个title之后(系统引导)，未经授权禁止进入指定系统
+禁用终端：(禁用tty1,tty2,tty3三个终端)
+	vim  /etc/init/start-ttys.conf
+   	      env ACTIVE_CONSOLES=/dev/tty[456]
+	vim  /etc/sysconfig/init
+	      ACTIVE_CONSOLES=/dev/tty[456]    更改完重启生效
+限制root只在安全终端登录：  (只在终端123上可以登录root)
+	vim /etc/securetty
+		tty1
+		tty2
+		tty3
+***
+禁止普通用户登录：
+	建立/etc/nologin文件，              touch /etc/nologin
+	删除nologin文件或重启后即恢复正常， rm -rf /etc/nologin
+	
+###### NMAP端口扫描：
+
+	nmap  127.0.0.1       检测tcp端口
+	nmap  -sU  127.0.0.1  检测udp端口
+	nmap -p 21 192.168.4.0/24 检测192.168.4.0/24网段有哪些主机提供FTP服务
+	nmap -n -sP 192.168.4.0/24 检测192.168.4.0/24网段有哪些存活主机
+
+###### 防火墙：
+
+Netfilter,位于Linux内核中的包过滤功能体系，称为Linux防火墙的“内核态”.
+Iptables,位于/sbin/iptables，用来管理防火墙规则的工具,称为Linux“用户态”.
+规则的作用：对数据包进行过滤或处理
+链的作用：容纳各种防火墙规则, 链的分类依据：处理数据包的不同时机
+表的作用：容纳各种规则链, 表的划分依据：防火墙规则的作用相似
+5个规则链：INPUT:入站，OUTPUT:出站，FORWARD:转发数据包,路由前→FORWARD→路由后，PREROUTING:路由前处理包，POSTROUTING:路由后处理包.
+raw表：	 是否对该数据包进行状态跟踪.策略设置需要在数据包刚刚触发防火墙的位置添加，PREROUTING（进本机的数据包）和OUTPUT（出本机的数据包）
+mangle表：为数据包设置标记,任何一个位置都可实现
+nat表：	 修改数据包中的源，目标IP地址和端口.所对应的链3个;POSTROUTING用于转换源地址，PREROUTING用于转换目标址，OUTPUT也可以实现本机发出数据包的源地址转换.
+filter表：包过滤，确定是否放行该数据包,包含三个链，INPUT，OUTPUT，FORWARD。
+ESTABLISHED：代表响应报文或已建立连接的报文
+
+###### 制作本地YUM源：(安装光盘)
+
+挂载光盘到/var/ftp/centos      mount  /dev/cdrom  /var/ftp/centos
+mv /etc/yum.repos.d/* /tmp
+vim /etc/yum.repos.d/test.repo
+	[test]
+	name=centos
+	baseurl=file:///var/ftp/centos
+	enabled=1
+	gpgcheck=0
+yum -y install ..............(可以使用了，为本机提供yum服务)
+若给别的主机提供yum服务，挂载完以后，先安装vsftpd
+rpm -ivh /var/ftp/centos/Packages/vsftpd-2.2.2...64.rpm(本机)
+客户端执行vim /etc/yum.repos.d/test.repo时,baseurl=ftp://var/ftp/centos,...不变
+
+
+yum时出现以下报错的，解决如下： rm -f /var/run/yum.pid
+yum uptime,与网络yum源比较，更新本机上所有包更新为最新的的版本
+yum install mongodb-org		安装mongo
+***
+#### pxe装机批量部署：
+①、搭建dhcp服务，用来分配地址、定位引导程序
+②、运行TFTP服务器，提供引导程序下载
+③、FTP服务
+④、安装system-config-kickstart,进行无人值守自动安装
+
+#### rsync远程同步：
+
+远程主机10.2：/var/www/html下的文件同步到本地：
+rsync -azv --delete root@192.168.10.2:/var/www/html /var/www/html/
+本地/var/www/html/下的文件同步到远程主机10.2下：
+rsync -azv --delete /var/www/html root@192.168.10.2:/var/www/html/
+rsync时过滤掉某个文件夹
+rsync -azv --exclude 'logs' /data0/realCompute/goods2kafka/ root@10.10.1.39:/data0/realCompute/goods2kafka/
+
+#### 实现免交互式登录：
+
+客户端(a)：
+ssh-keygen -t rsa      //按四下回车              或者：ssh-keygen -t rsa -P ""
+ssh-copy-id -i ~/.ssh/id_rsa.pub 192.168.91.135(b)
+将公钥写入远程服务器的~/.ssh/authorized_keys(b)中,
+客户端就可免密码登录服务端(b)了
+
+#### 实现远程时时同步：
+
+先实现免交互式登录，在安装inotify-tools工具,监控文件
+cp  /media/2017.../Y2c/inotify...gz  /usr/src
+cd /usr/src,   tar zxf inotify...gz,   cd inotify-tools-3.14
+./configure && make && make install(安装完成)
+inotifywait -mrq -e create,delete,modify,attrib /var/www/html & (监控文件html)
+若报错没有加载环境变量：
+	export LD_LIBRARY_PATH=/usr/local/inotify/lib:$LD_LIBRARY_PATH
+	
+写脚本:
+vim /root/rsync.sh
+	inotify_cmd=”inotifywait -mrq -e create,delete,modify,attrib /var/www/html”
+	rsync=“rsync -azv --delete /var/www/html root@192.168.10.2:/var/www/html/”
+	$inotify_cmd | while read a b c
+	do
+		$rsync
+	done
+chmod +x /root/rsync.sh
+/root/rsync.sh &  (执行并放在后台，所有新产生的文件都可以实时同步)
+
+#### Squid缓存代理：端口3128
+
+作用：加快重复访问的效率，正向代理(传统，透明)，反向代理
+***
+Aapche：多进程的web服务，适合cpu密集型业务，如数据库的查询、计算等
+Nginx：单进程的web服务，适合io密集型的业务，并发能力强于apache10倍
+LNMP环境建立:安装php时，--enable-fpm:让php支持nginx解析，fpm端口9000.
+Tomcat版本:Apache-tomcat-7.0.54,JDK:Java Development Kit-jdk-7u65-linux-x64.
+
+
+nginx反向代理负载均衡,使用epoll模型,session sticky模块,健康检查模块,
+Upstream(负载均衡)模块几个参数：
+interval=3000：每个节点3秒检测一次;
+rise=2：请求2次正常则标记节点状态为up;
+all=5：检测 5 次都失败，则标记节点的状态为down;
+timeout=1000：节点健康请求的超时时间为1秒;
+type=http：检查包的类型为http;
+port=8080：指定检查节点的端口号为8080;
+Nginx优化调整，进程数量调整，io事件模型epoll，每个进程连接数量的调整,设8192，六核的话达到50000的并发量
+
+###### 三个web服务器：apache，nginx，tomcat比较
+
+Apache和nginx支持html，php;tomcat支持jsp动态页面。Apache多进程，cpu密集型业务,数据库查询等;nginx单进程,适合io密集型业务,视频音频发布.
+Nginx和apache结合，利用nginx的并发能力强.
+Nginx和tomcat结合，tomcat并发能力不强，多用户同时访问时负载高,静态页面处理能力较弱，利用nginx的高并发能力以及高速处理静态页面的能力.
+	
+#### KVM部署:
+
+virsh shutdown centos6.5-01   关机
+virsh destroy   centos6.5-01  强制关机
+virsh start     centos6.5-01  开机
+virsh list --all              查看所有虚拟机
+virsh snapshot-create centos6.5-01   创建快照
+virsh snapshot-create-as centos6.5-01 centos6.5-01-init0(快照名字)   创建快照
+virsh snapshot-list centos6.5-01                   查看虚拟机快照信
+virsh snapshot-current centos6.5-01                查看虚拟机快照版本信息
+virsh snapshot-revert centos6.5-01 1502107121(快照id)  恢复到某个快照状态
+virsh snapshot-delete centos6.5-01 1502107121(快照id)  删除快照
+virt-clone -o centos6.5-01 -n centos6.5-02 -f /data_kvm/store/centos6.5-02.qcow2
+克隆之后的虚拟机，rm -rf /etc/udev/rules.d/70-persistent-net.rules,重启
+
+##### LVS负载均衡：
+
+群集：多台主机构成，对外表现为一个整体
+群集类型：
+①负载均衡群集（LB），提高系统的响应能力
+②高可用群集（HA），确保可靠性，达到高可用的容错效果
+③高性能运算全集（HPC）
+	
+负载均衡三层：前端调度器，服务器池，共享存储(NAS)、NFS协议实现
+公司中用到的中间件：apache，nginx，otmcat
+共享存储NAS,用NFS协议共享目录、挂载实现的：
+查看本机发布了哪些NFS共享目录：showmount -e
+客户端查询NFS服务器共享的目录：showmount -e (服务器ip)
+更好的分步式共享存储MFS
+
+负载均衡中三种模式：NAT模式;TUN模式;DR模式.
+NAT（地址转换）模式：调度器处于网关位置。优点：服务器处于内网中，比较安全，配置简单。缺点：环境小，访问量比较大时，调度器可能会成为瓶颈。
+TUN模式（IP隧道模式）：调度器和真实服务器分布在互联网的不同位置，调度器与真实服务器之间通过构建隧道相互通信
+DR模式（直接路由模式）：调度器与真实服务器位于同一物理网络，客户端请求被调度器分配到不同真实服务器后，通信过程不再经过调度器，调度器负担较轻，适用于访问量较大的环境，安全性比NAT模式稍差。可以通过前端再部署一个NAT设备，增加安全性。
+	
+LVS群集属于第四层的负载均衡机制，通过识别IP地址及端口号进行调度，内核模块ip_vs，查看节点状态：ipvsadm -ln
+Nginx(haproxy)反向代理属于第七层(osi七层)负载均衡机制，通过url进行调度.
+
+
+LVS四种调度算法：
+①轮询（Round Robin）将请求按顺序分配，均等对待每台服务器。
+②加权轮询（Weighted Round Robin）根据真实服务器的负载能力，轮流分配请求，适用于服务器性能不同的环境。
+③最少连接（Least Connections）根据真实服务器已建立的连接数进行分配，连接数少的优先分配请求，服务器性能差不多。
+④加权最少连接（Weighted Least Connections）在服务器性能节点差异较大的情况下为真实的服务器自动调整权重.
+
+NGINX三种调度算法：
+①轮询，②加权轮询，③ip_hash,服务器负载重,实现同一客户端访问同一个服务器
+haproxy使用的调度算法：
+①轮询RR，②最少连接LC，③根据来源进行调度SH(同nginx的ip_hash类似)
+
+###### keepalived热备:
+
+keepalived双机热备：（高可用）
+keepalived通过VRRP协议进行故障切换的，为故障切换和节点健康检查设计，也可独立实现，一秒发一次，发三次不回应就认为节点坏掉了.
+keepalived为lvs实现节点健康检查和故障切换
+
+
+haproxy搭建web群集：
+作用：负载均衡调度和为后端的节点进行健康检查
+
+##### mysql群集：主从复制，读写分离
+
+主端开启二进制日志记录功能，对从端授权;从端开启两个线程，I/O线程从主端二进制日志中读取，SQL线程从中继日志读取，重放执行事件到从端
+    
+主从不同步的原因：
+	网络延迟，服务器其外断电、宕机
+	配置时候的参数错误
+	主从两台机器负载不一致
+	mysql本身的bug引起的主从不同步
+	版本不一致，特别是高版本是主，低版本为从的情况下，主上面支持的功能，从上面不支持该功能。
+  
+解决：
+	数据相差不太大，数据要求不严格时，可以忽略错误，
+	先锁定主端数据库，锁表，可以把主端数据库完整备份到从端，进行恢复
+
+
+负载均衡的：F5(负载均衡的硬件设备并具有对节点健康检查的功能)，LVS，Nginx
+ 
+  ###### 监控软件：cacti，nagios，zabbix比较
+  
+cacti和nagios相比，cacti侧重于监控流量和性能，图形界面友好，主要使用SNMP协议来收集数据，nagios主要监控服务和性能好，报警功能很强大.
+zabbix特点是具有以前监控软件的优点，如图形界面友好，报警功能强大，服务器性能、服务、流量均可监控，并支持分步式部署(适用于大环境).
+
+
+ntpdate cn.pool.ntp.org //同步系统时间
+
+###### yum时出现以下报错的，解决如下:
+
+ rm -f /var/run/yum.pid
+
+###### MFS分步式文件系统:
+
+    MFS分步式文件系统，可以提供PB级别的共享存储(1PB=1024GB)，拥有冗余功能和动态扩容功能，保证数据安全性.
+	MFS原理： 把数据分散在多个物理服务器上，呈现给用户统一的资源
+	组成：    元数据服务器(master)、元数据日志服务器、数据存储服务器、客户端
+	分步式文件系统作用： 集中访问、简化操作、数据容灾、提高文件存取性能
+	客户端需要装包：    mfs、fuse
+
+##### RAID对比：
+类型     | 中文名称| 速度(性能)| 容量| 安全性、冗余性| 数量
+-------- | ----- | -----| -----| -----| -----
+RAID0| 条带卷| 为单个磁盘的N倍| 为单个磁盘的N倍|单块磁盘损坏,数据不可恢复| 最少两块
+RAID1| 镜像卷|为单个磁盘的N/2倍|为单个磁盘的N/2倍|一半数量的磁盘用于备份| 最少两块
+RAID3  | 有单块磁盘存储校验信息的条带卷|小于单块磁盘的N-1倍|等于单块磁盘的N-1倍| 单块磁盘损坏,数据可恢复|最少三块
+RAID5  | 分布式存储奇偶校验信息的条带卷| 小于单块磁盘的N-1倍|等于单块磁盘的N-1倍(单块容量存储校验信息)| 单块磁盘损坏,数据可恢复| 最少三块
+RAID6  |有两份校验信息的条带卷|比RAID5慢N-2|两块磁盘损坏,数据可恢复| -----| -----
+RAID1/10,前为底层  | 混合型| 为单个磁盘的N/2倍| 为单个磁盘的N/2倍| 一半数量的磁盘用于备份| 最少四块
+
+##### LVM与RAID比较：
+
+1、容量比单个磁盘更大，动态调整磁盘
+2、RAID从性能、安全性更好
+
+#### 三种监控软件：
+
+cacti：使用SNMP协议，161/udp，安装lamp环境，管理环境添加设备、生成图像，添加图形树，执行脚本收集数据添加过数据库模板插件，还添加过功能插件。
+nagios：分为服务器端程序和被监控端程序，被监控端安装nrpe插件。
+Zabbix：使用snmp协议，客户端安装客户端软件，要求php版本为5.4。Zabbix中导入监控nginx模板，编写监控nginx各种状态的脚本（存活性、活跃连接数、处理的连接数、握手数、总共处理的请求数量等），修改被监控端配置文件，针对于脚本定义键值，添加nginx主机并连接nginx模板。
+
+
+SAN (ipsan)：要求高速光纤通道，对速率、冗余要求高，使用iscsi存储协议,块级
+传输，文件系统管理在客户端
+NAS：支持普通以太网，对速率、冗余无特别要求使用NFS、CIFS共享协议，文件级传输网络附加存储(NFS和MFS)
+DAS：本地附加存储
+
+##### CentOS7.2：
+
+关防火墙：	systemctl stop firewalld.service
+		 	systemctl disable firewalld.service
+			  
+#### Saltstack自动化运维工具
+
+常用操作命令：
+测试客户端的联通性：salt "*" test.ping  “*”是对所有电脑,’ip1’是对ip1主机操作
+万能命令 cmd.run
+万能命令查看磁盘使用情况：salt “*” cmd.run ‘df -hT’
+万能命令查看内存使用情况：salt “*” cmd.run ‘free -m’
+万能命令安装软件：salt -L 192.168.217.130 cmd.run ‘yum -y install httpd’
+	
+分发目录：(提前将数据包放在salt的根目录下)mkdir -p /src/salt/base/packages
+	salt -L '192.168.32.136' cp.get_dir salt://packages/  /usr/src/
+分发文件：
+	salt -L '192.168.32.136' cp.get_file salt://web/test2  /tmp/test2
+查询计划任务：salt  “*”  cron.raw_cron  root
+添加计划任务：
+	salt “*” cron.set_job root ‘*/5’ ‘*’ ‘*’ ‘*’ ‘*’ “/usr/sbin/ntpdate -u cn.pool.ntp.org”
+删除计划任务：
+	salt “*” cron.rm_job root ‘*/5’ ‘*’ ‘*’ ‘*’ ‘*’ “/usr/sbin/ntpdate -u cn.pool.ntp.org”
+
+	
+改变文件的属主属组：
+	salt 192.168.217.130 file.chown /tmp/test2 uu uu        //将属主属组改为uu
+设置文件权限：
+	salt 192.168.217.130 file.set_mode /tmp/test2 0755      //改为0755权限
+查看文件权限：salt 192.168.217.130 cmd.run ‘stat /tmp/test2’
+复制文件：	salt “*” file.copy /tmp/test2 /opt/test2         //从源目录到目的目录
+查询目录是否存在： salt “*” file.diretcory_exits /test      //回复True或False
+创建多级目录：	salt “*” file.mkdir /usr/locla/nginx/nginx   //创建多级目录
+删除目录：		salt “*” file.remove /usr/local/nginx/nginx      //只能一级一级删除
+追加内容到文件：   salt “*” file.append /tmp/test2 baogeedu
+查看域名的信息：   salt “*” network.dig www.baidu.com
+测试连通性：      salt “*” network.ping www.baidu.com
+查看网卡mac地址：  salt “*” network.hwaddr eno16777736
+查看指定网卡的信息：salt “*” network.interface eno16777736
+获取ip：          salt “*” network.interface_ip eno16777736
+获取子网掩码：     salt ”*” network.subnets eno16777736
+
+pkg.install: centos调用的是yum ,ubuntu调用的是apt-get
+安装telnet包：salt “*” pkg.install telnet
+卸载telnet包：salt ”*” pkg.remove telnet
+	
+#### ansible自动化运维工具：
+
+使用ssh协议，只需要在控制端安装ansible，200台以下服务器数量比较合适，大量服务器使用saltstack合适。开始前对受控主机进行定义
+默认定义主机的文件为/etc/ansible/hosts：
+	10.10.1.134 ansible_ssh_user="root" ansible_ssh_pass="qAXAbU8B9ecJzR0g"
+	10.10.1.39  ansible_ssh_user="root" ansible_ssh_pass="cine123456"
+	10.10.1.17  ansible_ssh_user="root" ansible_ssh_pass="qAXAbU8B9ecJzR0g"
+	10.10.1.18  ansible_ssh_user="root" ansible_ssh_pass="qAXAbU8B9ecJzR0g"
+	[db]
+	10.10.1.134
+	10.10.1.39
+	[bi]
+	10.10.1.17
+	10.10.1.18
+	[bigdata:children]
+	db
+	bi
+
+
+各种模块，shell、command等，shell支持及管道，还有编写剧本。
+Ping模块验证与目标主机的连通性：ansible webservers -m ping
+万能命令：ansible webservers -m command -a 'df -hT'
+拷贝文件：ansible webservers -m copy -a 'src=/tmp/cpu_idle.sh dest=/tmp owner=lishang group=lishang mode=0644'
+yum安装： ansible webservers -m yum -a 'name=telnet state=removed' //state=removed:如果包不存在，则返回telnet is not installed;否则返会将包卸载。
+yum卸载： ansible webservers -m yum -a 'name=telnet state=absent' 
+开启服务：ansible webservers -m service -a 'name=httpd state=started enabled=yes'
+添加计划任务：ansible webservers -m cron -a "name='time sync' minute=*/5 weekday=1 job='/usr/sbin/ntpdate cn.pool.ntp.org'"
+修改已存在目录或者文件的属主、属组、权限
+ansible webservers -m file -a 'dest=/tmp/test mode=777 owner=root group=root'
+	
+#### 网络基础扩展部分：
+
+交换机：连接多个主机的设备，连接路由器与其它网络通信
+交换机的配置：
+
+  ##### VLAN：
+  
+中文名称：虚拟局域网;
+作用：逻辑分割广播域;
+原理：划分VLAN，将不同接口划给不同VLAN;
+优势：控制广播，增强网络安全性，简化网络管理;
+
+分为静态VLAN和动态VLAN。
+	
+  ###### VLAN可用的范围：
+  
+0，4095：保留，仅限系统使用，用户不能查看和使用这些VLAN
+1：      正常，Cisco默认VLAN，用户能够使用该VLAN，但不能删除它
+2-1001： 正常，用于以太网的VLAN，用户可以创建、使用和删除这些VLAN
+直接连接PC的交换机为接入层交换机，往上为汇聚层交换机，往上为核心层
+
+##### Trunk：
+
+中文名称：中继
+作用：通过一条链路跨交换机实现相同VLAN通信
+原理：通过VLAN标识区分不同VLAN数据，一条链路承载多个VLAN
+交换机之间的链路中继链路
+给交换机添加VLAN：全局模式下：vlan 2...
+将接口加入VLAN中：int f0/1
+			    switchport access vlan 2
+不同VLAN组相互通信： int f0/3
+				   switchport mode trunk
+在以太网上实现中继，有两种封装类型
+ISL（Cisco私有标准）（思科设备私有）
+IEEE 802.1q，2960交换机只支持802.1q（公有协议）
+	
+Trunk的模式| 是否协商
+-------- | ----- 
+接入 (Access)   |   中继关,不协商,连接主机的
+干道 (Trunk)   |   中继开,主动协商
+动态企望 (Dynamic desirable)   |   主动协商
+动态自动 (Dynamic auto)   |   被动协商
+非协商 (Nonegotiate)   |   不协商
+ 
+###### EthernetChannel:
+
+中文名称：以太通道（一般先配中继），端口聚合或链路汇聚
+作用：增大带宽，备份线路
+原理：将多条物理链路捆绑成一条逻辑链路;
+单臂路由
+作用：实现不用VLAN间通信
+原理：通过子接口区分不同VLAN
+缺点：“单臂”为网络骨干链路，容易形成网络瓶颈
+子接口依然依托于物理接口，应用不灵活
+VLAN间转发需要查看路由表，严重浪费设备资源
+	
+###### VTP 思科独有的协议
+
+中文名称：VLAN中继协议
+作用：统一管理VLAN，在一个交换机上操作，其他交换机学习VLAN信息
+VTP域的组成，交换机间有相同域名并通过Trunk相连
+VTP的运行模式：服务器模式(默认)，客户端模式，透明模式(关闭VTP)
+服务器模式：学习、转发相同域名的VTP消息，可增、删、改VLAN
+客户端模式：学习、转发相同域名的VTP消息，不可增、删、改VLAN
+透明模式：  不学习、不提供VTP消息，可以转发，可以配置VLAN
+VTP配置时，先配中继再配VTP域名
+VTP可自动更新：域名(其他交换机域名为)、版本配置编号，VLAN编号，VLAN
+名称、修剪也可自动更新
+不能自动更新的信息：模式、密码
+VTP自动更新时间300s
+
+###### 三层交换:
+
+主要功能是交换，同时具备某些路由功能，它出现的背景就是为了替代单臂路由，作用：实现不同VLAN间通信
+工作原理：一次路由(三层)，多次交换(二层)
+生成树协议(STP)---Spanning Tree Protocol
+中文名称：生成树协议
+作用：逻辑上断开环路，防止广播风暴的产生;备份线路
+原理：通过生成树算法确定阻塞接口
+生成树算法分为三个步骤：（网桥—交换机）
+选择根网桥：选择一个基准点，只有一个
+选择根端口：每个非根网桥上选择一个到根网桥最优路径的接口
+选择指定端口：每条线上选择一个指定端口
+选择根网桥：比较网桥ID，先看优先级，再看MAC地址，谁小谁优
+选择跟端口：
+①到根网桥最低的根路径成本(网桥到根网桥的路径上所有链路的成本之和)
+②直连的网桥ID最小（看对端的）
+③端口ID(端口优先级+端口编号)最小（看对端的）
+选择指定端口：
+①根路径成本较低，（根网桥上的端口全是指定端口）
+②所在的交换机的网桥ID的值较小（看自己的）
+③端口ID的值较小（看自己的）
+生成树发送的报文BPDU（桥协议数据单元）
+Switch(config)#spanning-tree vlan vlan-list root { primary|secondary }
+配置速端口：连接主机的接口无需参与生成树计算，可配置为速端口，接口连接后灯的颜色直接变为绿色，无需等待30S
+switch(config-if)#spanning-tree portfast
+	
+  ###### 热备份路由选择协议（HSRP）
+  
+中文名称：热备份路由选择协议
+作用：网关冗余
+原理：通过一个虚拟ip实现设备故障切换
+HELLO时间：3秒;保持时间：10秒
+VRRP协议，internet 任务组指制定
+活跃端一般配置4条命令（加入组，更改优先级，占先权，端口跟踪）
+备份端配两条命令（加入组，占先权）
+
+###### 子网划分
+
+128 64 32 16 8 4 2 1				       如：10110111=128+32+16+7=183
+128 192 224 240 248 252 254 255	（子网掩码） 如：11110000=240
+255 127 63 31 15 7 3 1	        （广播地址） 如：00001111=15
+
+概念：从主机位中借位充当网络位，网络数更多，网段更小
+1、IP地址：是一个32位二进制数的点分十进制数表示
+   192.168.1.1	--11000000.10101000.00000001.00000001
+2、子网掩码：IP地址中网络部分全1，主机部分全0的32位二进制数的点分十进制数表示
+   255.255.255.0	--11111111.11111111.11111111.00000000
+3、网络ID：IP地址中网络部分不变，主机部分全0
+   192.168.1.0	--11000000.10101000.00000001.00000000（IP地址和掩码做“与运算”）
+4、广播地址：IP地址中网络部分不变，主机部分全1
+   192.168.1.255	--11000000.10101000.00000001.11111111(网络地址+主机位全1)
+5、网络中可用IP范围：除去网络地址及广播地址
+   192.168.1.1-192.168.1.254
+
+###### 动态路由协议(RIP为主，OSPF为辅)
+
+	优点：减少管理任务;缺点：占用网络带宽
+	泛洪：将自己的路由信息发出来
+	收敛：使所有路由表都达到一致状态的过程→收敛成功
+	定期更新：30S更新一次;
+	广播更新：版本一;组播更新：版本二
+	全路由表更新：整表更新
+	RIP度量值最大跳数为15跳，520/udp端口发送，最多并不是15个，只要两个设备之间不超过15个路由就可以
+	水平分割可以阻止路由环路的发生
+	原理：从一个接口学习到路由信息，不再从这个接口发送出去
+	广播：目标是全体，且进行分析处理
+	组播：目标是部分人，部分人进行分析处理，效率更高
+	RIP v1有类路由协议，不识别子网;自动路由汇总，不可关闭;不支持VLSM
+	RIP v2无类路由协议，识别子网;自动汇总可关闭，可手工汇总;支持VLSM
+	OSPF路由协议
+	三个表，路由表，邻居表，链路结构表，无条数限制，支持大环境
+
+  ###### IPv6:
+	
+	相对于IPv4，有更大的地址空间和更高效的路由基础
+	更大的地址空间：2^128个ip地址
+	更高效的路由：
+	①ip地址统一规划，便于汇总
+	②包头头长固定，简单
+	③采用PMTU转发数据，不进行分片重组
+	IPv6地址是冒号分16进制数，全局单播地址相当于IPv4的公有地址;站点本地地址相当于IPv4的私有地址，以FEC0开头;链路本地地址是必须存在的，是启用IPv6时自动产生的，以FE80开头，此地址不会被路由器转发。
+
+###### IPSec VPN
+
+中文名称：虚拟专用网络
+作用：在公用网络上建立专用网络，进行加密通讯—虚拟专网
+原理：通过4个关键技术来实现：访问控制、加密、认证、隧道
+加密与认证比较，加密为双向过程，有加密必有解密，主要实现数据的机密性，常用加密算法DH、GPG、DES、3DES和AES;认证为单向过程，主要用于报文完整性验证和身份确认，常用算法MD5和SHA
+对称加密算法传输快、不安全;非对称加密算法计算复杂，效率太低，传输慢
+通过非对称加密算法加密对称加密算法的密钥，然后再用对称加密算法加密实际要传输的数据
+
+###### 硬件防火墙
+
+常见型号：Cisco  ASA 5520
+安全级别高的可以访问安全级别低的，安全级别相同相互不能访问
+华3、华为设备
+华为华三防火墙区域分为：local,trust,untrust,dmz四个区域，安全级别从高到低分别为，local 100,trust 85,dmz 50,untrust 5,安全级别仅代表配置策略时的前后位置，级别高的在前，级别低的在后。
+默认域间策略，local到其他区域访问均允许，trust到local允许，其他域间访问均禁止。
+				
+-|思科	|    华为|
+--|---|---|	
+二层交换   |	2960   |   S3700	
+三层交换	 |  3560   |   S5700	
+路由器	     |  2821/2800	|  AR2200	
+防火墙	     |  ASA 5520	|  USG 5500	
+
+生成树stp和hsrp相比较，生成树用于路径选择，而hsrp或vrrp用于确定网关位置
+
+技术	中文名称	作用	原理或实现方法			
+Vlan，Trunk，Vtp，EtherChannel，STP，HSRP，vrrp，ACL，NAT，VPN，IPv6，RIP/OSPF
+2821  2621  路由器
+3560        三层交换
+2960        二层交换
+
+###### Apache的两种工作模式：
+
+Perfork是多进程模式，每个进程都有独立的系统资源，稳定性较好，效率较高，但系统资源占用较多
+Worker采用多进程多线程模式，系统资源占用少，适合高并发。
+
+###### Centos 7 服务开启的命令
+
+我们对service和chkconfig两个命令都不陌生，systemctl 是管制服务的主要工具， 它整合了chkconfig 与 service功能于一体。
+systemctl is-enabled iptables.service
+systemctl is-enabled servicename.service #查询服务是否开机启动
+systemctl enable *.service   #开机运行服务
+systemctl disable *.service  #取消开机运行
+systemctl start *.service    #启动服务
+systemctl stop *.service     #停止服务
+systemctl restart *.service  #重启服务
+systemctl reload *.service   #重新加载服务配置文件
+systemctl status *.service   #查询服务运行状态
+systemctl --failed #显示启动失败的服务
+注：*代表某个服务的名字，如http的服务名为httpd
+
+###### 重置root密码：
+
+重启 Linux 系统主机并出现引导界面时，按下键盘上的 e 键进入内核编辑界面
+在 linux16 参数这行的最后面追加“rd.break”参数，然后按下 Ctrl + X 组合键来运行修改过的内核程序
+大约 30 秒过后，进入到系统的紧急求援模式。
+依次输入以下命令，等待系统重启操作完毕，然后就可以使用新密码来登录Linux 系统了.
+	mount -o remount,rw /sysroot
+	chroot /sysroot
+	passwd
+	touch /.autorelabel
+	exit
+	reboot
+	   
+###### yum相关：
+
+命令 |	作用  |
+  --    |  -------  |
+yum repolist all    		|	列出所有仓库
+yum list all     				|   列出仓库中所有软件包
+yum info 软件包名称  	|    查看软件包信息
+yum install 软件包名称| 	安装软件包
+yum reinstall 软件包名称| 	重新安装软件包
+yum update 软件包名称 | 	升级软件包
+yum remove 软件包       |	移除软件包
+yum clean all 	               |	清除所有仓库缓存
+yum check-update         | 	检查可更新的软件包
+yum grouplist                 |		查看系统中已经安装的软件包组
+yum groupinstall 软件包组  |  安装指定的软件包组
+yum groupremove 软件包组 |	移除指定的软件包组
+yum groupinfo 软件包组 |查询指定的软件包组信息
+
+##### 随机生成10位密码:
+ 
+#!/bin.bash
+for i in {1..15}
+do
+	A=`head -c 500 /dev/urandom | tr -dc A-Z |head -c 1`
+	#随机生成500字符|只取大写字母|取第一个字符
+	B=`head -c 500 /dev/urandom | tr -dc [:alnum:]| head -c 8`
+	#随机生成500字符|取英文大小写字节及数字，亦即 0-9, A-Z, a-z|取8位
+	C=`echo $RANDOM$RANDOM|cut -c 2`
+	#取第二位随机数字,第一位随机性不高大多数是1或2,所以取第二位.
+	 echo "$A$B$C"
+done
+
+###### 随机生成12位密码:
+
+#!/bin/bash
+for i in {1..10}
+do
+	A=`head -c 500 /dev/urandom | tr -dc a-z0-9A-Z | tr [a-z] [A-Z]|head -c 2`
+	B=`head -c 500 /dev/urandom | tr -dc a-z0-9A-Z | head -c 9`
+	C=`echo $RANDOM|cut -c 3`
+	echo "$A$B$C"
+done
+
+
+将档案file1.txt设为该档案拥有者,与其所属同一个群体者可写入,但其他以外的人则不可写入
+chmod ug+w,o-w file1.txt 
+
+		
+cat c.txt | sed 's/$/,/g'|xargs    #按行显示编码并以逗号分割
+:g/^\s*$/d						   #在vi编辑器中删除空行
+		
+		
+#cat a.txt | xargs >b.txt           #将1.txt的按列显示的文档转换成按行显示到2.txt
+#cat b.txt | sed 's/\s\+/,/g'       #2.txt中全部编码空格符全部换为,
+	 
+
+tcpdump -X -i eth0
+vim /etc/ssh/sshd_config
+	tcpdump -X -i eth0  port 6080 -vv
+	tcpdump -X -i eth0 port 7083
+	tcpdump  -i eth0 port 7083
+	 
+###### 安装系统出现问题：
+
+TS250 安装报错disabling lock debuging  due to kernel taint：
+解决：
+  在安装启动页面弹出时，按tab键 --- 输入空格 --- 再输入 acpi=off --- 回车，进行安装
+		
+GNU GRUB
+	grub>find  /boot/grub/stage1
+	grub>root (hd0,6)    注：这是/boot所在的分区；
+	grub>setup (hd0)   注：把GRUB写到MBR上；
+
+raid问题:
+ disk sda contains BIOS raid metadata,but is not part of any recognized biso raid sets.
+ 在安装启动页面弹出时，按tab键 --- 输入空格 --- 再输入 nodmraid --- 回车，进行安装
+
+###### 修改时间：
+	 
+date -s '2018-11-15 11:25:00'&&  hwclock -w;hwclock -r      //修改时间，并将系统时间同步到硬件时间
+echo  1462 >  /sys/class/net/eth0/mtu
+cat  .
+/var/log/message                                            //网卡连接信息 
+/etc/sysctl.conf        --->>>        net.ipv4.ip_forward = 1 
+
+### screen不间断会话服务
+
+①管理远程会话
+screen -S linux(创建的会话的名字)      //-S 创建一个会话
+screen -ls 							   //查看正在工作中的会话
+exit								   //退出当前的screen会话
+创建会话之后,运行某个脚本或者命令,这时将窗口关掉,用 screen -ls 查看刚刚离线的会话
+screen -r linux                        //恢复之前关闭的会话
+screen -d linux                        //远程临时detach掉linux这个会话
+screen -d -r linux                     //结束当前会话并回到linux这个会话
+    
+②会话共享功能
+终端A和终端B都登录到linux服务器上,在A上创建一个会话
+screen -S lishang
+在B上, screen -ls 查看一下当前会话,用 screen -x 进入该会话
+终端B上可以看到A终端上显示的内容
+		
+###### 安装 ibm_utl_sraidmr_megacli-8.00.48_linux_32-64.zip 包,查看系统信息
+
+cd linux
+rpm -ivh Lib_Utils-1.00-09.noarch.rpm  MegaCli-8.00.48-1.i386.rpm
+命令及参数：
+ /opt/MegaRAID/MegaCli/MegaCli64 -LDInfo -Lall -aALL         查raid级别
+ /opt/MegaRAID/MegaCli/MegaCli64 -AdpAllInfo -aALL           查raid卡信息
+ /opt/MegaRAID/MegaCli/MegaCli64 -PDList -aALL            -------查看硬盘信息-----------
+ /opt/MegaRAID/MegaCli/MegaCli64 -AdpBbuCmd -aAll            查看电池信息
+ /opt/MegaRAID/MegaCli/MegaCli64 -FwTermLog -Dsply -aALL     查看raid卡日志
+ /opt/MegaRAID/MegaCli/MegaCli64 -adpCount                  【显示适配器个数】
+ /opt/MegaRAID/MegaCli/MegaCli64 -AdpGetTime –aALL 		   【显示适配器时间】
+ /opt/MegaRAID/MegaCli/MegaCli64 -AdpAllInfo -aAll 		   【显示所有适配器信息】
+ /opt/MegaRAID/MegaCli/MegaCli64 -LDInfo -LALL -aAll 	   【显示所有逻辑磁盘组信息】
+ /opt/MegaRAID/MegaCli/MegaCli64 -PDList -aAll   		   【显示所有的物理信息】
+ /opt/MegaRAID/MegaCli/MegaCli64 -AdpBbuCmd -GetBbuStatus -aALL |grep ‘Charger Status’ 【查看充电状态】
+ /opt/MegaRAID/MegaCli/MegaCli64 -AdpBbuCmd -GetBbuStatus -aALL          【显示BBU状态信息】
+ /opt/MegaRAID/MegaCli/MegaCli64 -AdpBbuCmd -GetBbuCapacityInfo -aALL    【显示BBU容量信息】
+ /opt/MegaRAID/MegaCli/MegaCli64 -AdpBbuCmd -GetBbuDesignInfo -aALL      【显示BBU设计参数】
+ /opt/MegaRAID/MegaCli/MegaCli64 -AdpBbuCmd -GetBbuProperties -aALL      【显示当前BBU属性】
+/opt/MegaRAID/MegaCli/MegaCli64 -cfgdsply -aALL     【显示Raid卡型号，Raid设置，Disk相关信息】
+
+
+yum安装 nslookup 指令
+yum -y install bind-utils
+
+  ###### 判断主机是物理机还是虚拟机
+  
+windows：Systeminfo | findstr /i "System Model"
+		如果System Model：后面含有Virutal就是虚拟机，其他都是物理机
+linux：dmesg | grep -i virtual
+		显示VMware Virtual Platform就是虚拟机
+
+
+安装dmidecode命令,执行  dmidecode -t 1  查看系统信息
+查看服务器型号：dmidecode | grep 'Product Name'
+查看主板的序列号：dmidecode |grep 'Serial Number'
+查看系统序列号：dmidecode -s system-serial-number
+查看内存信息：dmidecode -t memory
+查看OEM信息：dmidecode -t 11
+服务器序列号(SN号)：dmidecode -t system | grep Serial
+
+
+yum安装mysql，默认密码查看：grep 'temporary password' /var/log/mysqld.log
+
+###### 服务器主机名高亮显示：修改  vim .bashrc
+
+###最长用
+PS1="\[\e[0m\][\u@\[\e[32;1m\]`/sbin/ifconfig em1 | grep "inet addr" | sed -e "s/^.*inet addr:\(.*\) Bcast.*$/\1/"`\[\e[0m\] \W]# "
+export PS1
+		
+export ip=`ifconfig|grep "inet addr"|head -1 |awk '/inet addr/ {print $2}'|cut -d: -f2`
+export PS1="\[\033]2;\h:\u \w\007\033[32;1m\]\u@\033[33;1m\h \033[35;1m$ip\033[0m \[\033[34;1m\]\w\[\033[0m\] \[\e[31;1m\]# \[\e[0m\]"
+
+export ip=`ifconfig|grep  "inet addr"|head -1 |awk '/inet addr/ {print $2}'|cut -d: -f2`
+export PS1="\[\033]2;\h:\u \w\007\033[32;1m\]\u@$ip \033[35;1m\t\033[0m \[\033[34;1m\]\w\[\033[0m\] \[\e[31;1m\] # \[\e[0m\]"
+
+###### 修改MTU值：
+
+cat /sys/class/net/em1/mtu && echo 1468 /sys/class/net/em1/mtu
+
+###### ab测试访问:
+
+访问5W次
+	ab -n 20 -c 5 -t 2 -k http://10.10.1.132:80/index.html
+访问10次，并发10次
+	ab -n 10 -c 10 http://10.10.1.132/odps/goodsSell.action
+	
