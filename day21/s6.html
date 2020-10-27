@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <table border="1" width="200px">
+        <tr><td>1</td><td>1</td><td>1</td></tr>
+        <tr><td>2</td><td>2</td><td>2</td></tr>
+        <tr><td>3</td><td>3</td><td>3</td></tr>
+    </table>
+    <script>
+        var mycolor = document.getElementsByTagName("tr");
+        var len = mycolor.length;
+        for(var i=0;i<len;i++){
+            mycolor[i].onmouseover = function () {
+                this.style.backgroundColor = 'green';
+            }
+
+            mycolor[i].onmouseout = function () {
+                this.style.backgroundColor = '';
+            }
+        }
+    </script>
+</body>
+</html>
